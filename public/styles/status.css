@@ -1,0 +1,55 @@
+/* Success/Cancel Status Pages */
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-container {
+  background: white;
+  padding: 60px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  text-align: center;
+}
+
+.success-icon,
+.cancel-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  font-size: 48px;
+}
+
+.success-icon {
+  background: #10b981;
+}
+
+.cancel-icon {
+  background: #ef4444;
+}
+
+h1 {
+  color: #171717;
+  margin-bottom: 15px;
+}
+
+p {
+  color: #747474;
+  margin-bottom: 30px;
+}
+
+a {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #667eea;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}

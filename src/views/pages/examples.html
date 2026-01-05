@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stream SDK Examples</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/examples.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Back to Home</a>
+    <h1>API Examples</h1>
+    <p class="subtitle">Interactive examples for Stream SDK integration</p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Products</h2>
+        <p>Manage your product catalog with create, list, update, and delete operations.</p>
+        <div class="endpoint"><span class="method get">GET</span>/api/products</div>
+        <div class="endpoint"><span class="method get">GET</span>/api/products/:id</div>
+        <div class="endpoint"><span class="method post">POST</span>/api/products/create</div>
+      </div>
+
+      <div class="card">
+        <h2>Consumers</h2>
+        <p>Customer management including creation, listing, and updates.</p>
+        <div class="endpoint"><span class="method get">GET</span>/api/consumers</div>
+        <div class="endpoint"><span class="method get">GET</span>/api/consumers/:id</div>
+        <div class="endpoint"><span class="method post">POST</span>/api/consumers/create</div>
+      </div>
+
+      <div class="card">
+        <h2>Payment Links</h2>
+        <p>Generate secure payment links for your customers.</p>
+        <div class="endpoint"><span class="method get">GET</span>/api/payment-links</div>
+        <div class="endpoint"><span class="method post">POST</span>/api/payment-links/create</div>
+      </div>
+
+      <div class="card">
+        <h2>Subscriptions</h2>
+        <p>Handle recurring payments and subscription management.</p>
+        <div class="endpoint"><span class="method get">GET</span>/api/subscriptions</div>
+        <div class="endpoint"><span class="method post">POST</span>/api/subscriptions/create</div>
+      </div>
+
+      <div class="card">
+        <h2>Invoices</h2>
+        <p>Create and manage invoices for your customers.</p>
+        <div class="endpoint"><span class="method get">GET</span>/api/invoices</div>
+        <div class="endpoint"><span class="method post">POST</span>/api/invoices/create</div>
+      </div>
+
+      <div class="card">
+        <h2>Coupons</h2>
+        <p>Manage discount codes and promotional offers.</p>
+        <div class="endpoint"><span class="method get">GET</span>/api/coupons</div>
+        <div class="endpoint"><span class="method post">POST</span>/api/coupons/create</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

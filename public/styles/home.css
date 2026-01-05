@@ -1,0 +1,47 @@
+/* Home Page Styles */
+body {
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+}
+
+h1 {
+  color: #171717;
+}
+
+p {
+  color: #747474;
+}
+
+.nav-links {
+  display: grid;
+  gap: 15px;
+}
+
+.nav-link {
+  display: block;
+  padding: 15px 20px;
+  background: black;
+  color: white;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background: rgba(253, 193, 75, 1);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.logo {
+  margin-bottom: 16px;
+}

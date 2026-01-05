@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stream</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/shop.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <a href="/" class="back-link">← Back to Home</a>
+        <h1>Payment links</h1>
+        <p class="subtitle">Browse available products and make a purchase</p>
+      </div>
+
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+
+      <div id="error" class="error-message" style="display: none">
+        <p>Failed to load products. Please try again later.</p>
+      </div>
+
+      <div id="products-grid" class="products-grid">
+        <!-- Products will be loaded here dynamically -->
+      </div>
+    </div>
+
+    <script>
+      // Fetch and display payment links
+      async function loadProducts() {
+        const loading = document.getElementById("loading");
+        const error = document.getElementById("error");
+        const grid = document.getElementById("products-grid");
+
+        try {
+          const response = await fetch("/api/payment-links?size=50");
+          if (!response.ok) throw new Error("Failed to fetch payment links");
+
+          const data = await response.json();
+          const paymentLinks = data.data || [];
+
+          loading.style.display = "none";
+
+          if (paymentLinks.length === 0) {
+            grid.innerHTML =
+              '<p class="no-products">No products available at the moment.</p>';
+            return;
+          }
+
+          grid.innerHTML = paymentLinks
+            .filter(
+              (link) =>
+                link.status === "ACTIVE" && link.items && link.items.length > 0
+            )
+            .map((link) => {
+              const product = link.items[0]?.product || {};
+              const productType =
+                product.type ||
+                (link.recurring_interval ? "RECURRING" : "ONE_OFF");
+
+              return `
+              <div class="product-card">
+                <!-- <div class="product-image">
+                  <div class="product-icon">${getProductIcon(productType)}</div>
+                </div> -->
+                <div class="product-info">
+                  <h3 class="product-name">${escapeHtml(
+                    link.name || product.name || "Product"
+                  )}</h3>
+                  <p class="product-description">${escapeHtml(
+                    link.description ||
+                      product.description ||
+                      "Premium product available for purchase"
+                  )}</p>
+                  <div class="product-meta">
+                    <span class="product-type">${formatProductType(
+                      productType,
+                      link.recurring_interval,
+                      link.recurring_interval_count
+                    )}</span>
+                  </div>
+                  <div class="product-footer">
+                    <div class="product-price">
+                      ${getCurrencySymbol(link.currency)}
+                      <span class="amount">${formatPrice(link.amount)}</span>
+                    </div>
+                    <button
+                      class="buy-button"
+                      onclick="buyProduct('${link.url}')"
+                    >
+                      Pay now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+            })
+            .join("");
+        } catch (err) {
+          console.error("Error loading payment links:", err);
+          loading.style.display = "none";
+          error.style.display = "block";
+        }
+      }
+
+      // Buy product - redirect to payment link URL
+      function buyProduct(paymentUrl) {
+        if (paymentUrl) {
+          window.location.href = paymentUrl;
+        } else {
+          alert("Invalid payment link. Please try again.");
+        }
+      }
+
+      // Helper functions
+      function formatPrice(price) {
+        return parseFloat(price).toFixed(2);
+      }
+
+      function getCurrencySymbol(currency) {
+        if (currency === 'SAR') {
+          return `<svg class="currency-symbol" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1124.14 1256.39">
+            <path fill="currentColor" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+            <path fill="currentColor" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+          </svg>`;
+        }
+        return `<span class="currency">${currency || 'SAR'}</span>`;
+      }
+
+      function formatProductType(type, recurringInterval, intervalCount) {
+        if (type === "RECURRING" && recurringInterval) {
+          const interval = recurringInterval.toLowerCase();
+          if (intervalCount && intervalCount > 1) {
+            return `Every ${intervalCount} ${interval}s`;
+          }
+          return interval.charAt(0).toUpperCase() + interval.slice(1) + "ly";
+        }
+
+        const types = {
+          ONE_OFF: "One-time Purchase",
+          RECURRING: "Subscription",
+        };
+        return types[type] || "One-time Purchase";
+      }
+
+      function getProductIcon(type) {
+        const icons = {
+          ONE_OFF: "🛍️",
+          RECURRING: "🔄",
+          MONTHLY: "📅",
+          YEARLY: "📆",
+        };
+        return icons[type] || "📦";
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Load products on page load
+      loadProducts();
+    </script>
+  </body>
+</html>

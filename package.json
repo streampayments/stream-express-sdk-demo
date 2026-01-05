@@ -1,0 +1,28 @@
+{
+  "name": "stream-express-boilerplate",
+  "version": "1.0.0",
+  "description": "Express.js boilerplate for Stream Payment Integration",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "stream",
+    "payment",
+    "express",
+    "boilerplate",
+    "streampay"
+  ],
+  "author": "Stream Payments",
+  "license": "MIT",
+  "dependencies": {
+    "@streamsdk/typescript": "^1.0.0",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Failed - Stream Payments</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/payment-status.css">
+</head>
+<body>
+  <div class="container status-container">
+    <div class="error-animation">
+      <div class="error-icon">✕</div>
+    </div>
+
+    <h1>Payment Failed</h1>
+    <p class="message">We couldn't process your payment. No charges have been made to your account.</p>
+
+    <div class="details" id="errorDetails">
+      <!-- Error details will be populated if available -->
+    </div>
+
+    <div class="actions">
+      <a href="/shop" class="btn btn-primary">Try Again</a>
+      <a href="/" class="btn btn-secondary">Return to Home</a>
+    </div>
+
+    <div class="info-box error-info">
+      <p><strong>Common reasons for payment failure:</strong></p>
+      <ul>
+        <li>Insufficient funds</li>
+        <li>Incorrect card details</li>
+        <li>Card expired or blocked</li>
+        <li>Transaction cancelled</li>
+      </ul>
+      <p>If you continue to experience issues, please contact support.</p>
+    </div>
+  </div>
+
+  <script>
+    // Check for reason in URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const reason = urlParams.get('reason');
+
+    if (reason) {
+      const detailsEl = document.getElementById('errorDetails');
+      detailsEl.innerHTML = `
+        <div class="detail-item error">
+          <span class="detail-label">Reason:</span>
+          <span class="detail-value">${reason}</span>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
