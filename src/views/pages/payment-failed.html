@@ -1,56 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Failed - Stream Payments</title>
-  <link rel="stylesheet" href="/styles/main.css">
-  <link rel="stylesheet" href="/styles/payment-status.css">
-</head>
-<body>
-  <div class="container status-container">
-    <div class="error-animation">
-      <div class="error-icon">✕</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Failed - Stream Payments</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/payment-status.css" />
+  </head>
+  <body>
+    <div class="container status-container">
+      <div class="error-animation">
+        <div class="error-icon">✕</div>
+      </div>
+
+      <h1>Payment Failed</h1>
+      <p class="message">We couldn't process the payment.</p>
+
+      <div class="details" id="errorDetails">
+        <!-- Error details will be populated if available -->
+      </div>
+
+      <div class="actions">
+        <a href="/shop" class="btn btn-primary">Try Again</a>
+        <a href="/" class="btn btn-secondary">Return to Home</a>
+      </div>
     </div>
 
-    <h1>Payment Failed</h1>
-    <p class="message">We couldn't process your payment. No charges have been made to your account.</p>
+    <script>
+      // Parse all URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
 
-    <div class="details" id="errorDetails">
-      <!-- Error details will be populated if available -->
-    </div>
+      // Extract payment details from URL
+      const paymentDetails = {
+        id: urlParams.get("id"),
+        payment_link_id: urlParams.get("payment_link_id"),
+        status: urlParams.get("status"),
+        message: urlParams.get("message"),
+        login_method: urlParams.get("login_method"),
+        reason: urlParams.get("reason"),
+      };
 
-    <div class="actions">
-      <a href="/shop" class="btn btn-primary">Try Again</a>
-      <a href="/" class="btn btn-secondary">Return to Home</a>
-    </div>
+      // Display error details if available
+      const detailsEl = document.getElementById("errorDetails");
+      const detailsHTML = [];
 
-    <div class="info-box error-info">
-      <p><strong>Common reasons for payment failure:</strong></p>
-      <ul>
-        <li>Insufficient funds</li>
-        <li>Incorrect card details</li>
-        <li>Card expired or blocked</li>
-        <li>Transaction cancelled</li>
-      </ul>
-      <p>If you continue to experience issues, please contact support.</p>
-    </div>
-  </div>
+      if (paymentDetails.status) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Status:</span>
+          <span class="detail-value" style="color: #ef4444; font-weight: 600; text-transform: uppercase;">${paymentDetails.status}</span>
+        </div>
+      `);
+      }
 
-  <script>
-    // Check for reason in URL params
-    const urlParams = new URLSearchParams(window.location.search);
-    const reason = urlParams.get('reason');
+      if (paymentDetails.message) {
+        // Decode URL encoded message
+        const decodedMessage = decodeURIComponent(paymentDetails.message);
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Message:</span>
+          <span class="detail-value" style="color: #ef4444; font-weight: 600;">${decodedMessage}</span>
+        </div>
+      `);
+      }
 
-    if (reason) {
-      const detailsEl = document.getElementById('errorDetails');
-      detailsEl.innerHTML = `
+      if (paymentDetails.reason) {
+        detailsHTML.push(`
         <div class="detail-item error">
           <span class="detail-label">Reason:</span>
-          <span class="detail-value">${reason}</span>
+          <span class="detail-value">${paymentDetails.reason}</span>
         </div>
-      `;
-    }
-  </script>
-</body>
+      `);
+      }
+
+      if (paymentDetails.payment_link_id) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Payment Link ID:</span>
+          <span class="detail-value">${paymentDetails.payment_link_id}</span>
+        </div>
+      `);
+      }
+
+      if (paymentDetails.id) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Transaction ID:</span>
+          <span class="detail-value">${paymentDetails.id}</span>
+        </div>
+      `);
+      }
+
+      if (paymentDetails.login_method) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Login Method:</span>
+          <span class="detail-value">${paymentDetails.login_method}</span>
+        </div>
+      `);
+      }
+
+      if (detailsHTML.length > 0) {
+        detailsEl.innerHTML = detailsHTML.join("");
+        detailsEl.style.display = "block";
+      } else {
+        detailsEl.style.display = "none";
+      }
+    </script>
+  </body>
 </html>

@@ -1,79 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Successful - Stream Payments</title>
-  <link rel="stylesheet" href="/styles/main.css">
-  <link rel="stylesheet" href="/styles/payment-status.css">
-</head>
-<body>
-  <div class="container status-container">
-    <div class="success-animation">
-      <div class="success-checkmark">
-        <div class="check-icon">
-          <span class="icon-line line-tip"></span>
-          <span class="icon-line line-long"></span>
-          <div class="icon-circle"></div>
-          <div class="icon-fix"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Successful - Stream Payments</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/payment-status.css" />
+  </head>
+  <body>
+    <div class="container status-container">
+      <div class="success-animation">
+        <div class="success-checkmark">
+          <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+          </div>
         </div>
+      </div>
+
+      <h1>Payment Successful!</h1>
+      <p class="message">
+        Thank you for your purchase. Your payment has been processed
+        successfully.
+      </p>
+
+      <div class="details" id="paymentDetails">
+        <!-- Payment details will be populated if available -->
+      </div>
+
+      <div class="actions">
+        <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+        <a href="/" class="btn btn-secondary">Return to Home</a>
       </div>
     </div>
 
-    <h1>Payment Successful!</h1>
-    <p class="message">Thank you for your purchase. Your payment has been processed successfully.</p>
+    <script>
+      // Parse all URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
 
-    <div class="details" id="paymentDetails">
-      <!-- Payment details will be populated if available -->
-    </div>
+      // Extract payment details from URL
+      const paymentDetails = {
+        id: urlParams.get("id"),
+        payment_link_id: urlParams.get("payment_link_id"),
+        invoice_id: urlParams.get("invoice_id"),
+        consent_id: urlParams.get("consent_id"),
+        payment_id: urlParams.get("payment_id"),
+        organization_consumer_id: urlParams.get("organization_consumer_id"),
+        status: urlParams.get("status"),
+        message: urlParams.get("message"),
+        login_method: urlParams.get("login_method"),
+      };
 
-    <div class="actions">
-      <a href="/shop" class="btn btn-primary">Continue Shopping</a>
-      <a href="/" class="btn btn-secondary">Return to Home</a>
-    </div>
+      // Display payment details if available
+      const detailsEl = document.getElementById("paymentDetails");
+      const detailsHTML = [];
 
-    <div class="info-box">
-      <p><strong>What happens next?</strong></p>
-      <p>You will receive a confirmation email with your payment details shortly.</p>
-    </div>
-  </div>
+      if (paymentDetails.status) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Status:</span>
+          <span class="detail-value" style="color: #10b981; font-weight: 600; text-transform: uppercase;">${paymentDetails.status}</span>
+        </div>
+      `);
+      }
 
-  <script>
-    // Check for invoice_id in URL params
-    const urlParams = new URLSearchParams(window.location.search);
-    const invoiceId = urlParams.get('invoice_id');
+      if (paymentDetails.message) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Message:</span>
+          <span class="detail-value" style="color: #10b981; font-weight: 600;">${paymentDetails.message}</span>
+        </div>
+      `);
+      }
 
-    if (invoiceId) {
-      const detailsEl = document.getElementById('paymentDetails');
-      detailsEl.innerHTML = `
+      if (paymentDetails.payment_id) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Payment ID:</span>
+          <span class="detail-value">${paymentDetails.payment_id}</span>
+        </div>
+      `);
+      }
+
+      if (paymentDetails.invoice_id) {
+        detailsHTML.push(`
         <div class="detail-item">
           <span class="detail-label">Invoice ID:</span>
-          <span class="detail-value">${invoiceId}</span>
+          <span class="detail-value">${paymentDetails.invoice_id}</span>
         </div>
-      `;
-    }
-
-    // Add confetti effect (simple animation)
-    setTimeout(() => {
-      createConfetti();
-    }, 500);
-
-    function createConfetti() {
-      const colors = ['#667eea', '#764ba2', '#10b981', '#f59e0b', '#ef4444'];
-      const confettiCount = 50;
-
-      for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDelay = Math.random() * 3 + 's';
-        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-        document.body.appendChild(confetti);
-
-        setTimeout(() => confetti.remove(), 5000);
+      `);
       }
-    }
-  </script>
-</body>
+
+      if (paymentDetails.payment_link_id) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Payment Link ID:</span>
+          <span class="detail-value">${paymentDetails.payment_link_id}</span>
+        </div>
+      `);
+      }
+
+      if (paymentDetails.consent_id) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Consent ID:</span>
+          <span class="detail-value">${paymentDetails.consent_id}</span>
+        </div>
+      `);
+      }
+
+      if (paymentDetails.login_method) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Login Method:</span>
+          <span class="detail-value">${paymentDetails.login_method}</span>
+        </div>
+      `);
+      }
+
+      if (paymentDetails.id) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Transaction ID:</span>
+          <span class="detail-value">${paymentDetails.id}</span>
+        </div>
+      `);
+      }
+
+      if (paymentDetails.organization_consumer_id) {
+        detailsHTML.push(`
+        <div class="detail-item">
+          <span class="detail-label">Consumer ID:</span>
+          <span class="detail-value">${paymentDetails.organization_consumer_id}</span>
+        </div>
+      `);
+      }
+
+      if (detailsHTML.length > 0) {
+        detailsEl.innerHTML = detailsHTML.join("");
+        detailsEl.style.display = "block";
+      } else {
+        detailsEl.style.display = "none";
+      }
+
+      // Add confetti effect (simple animation)
+      setTimeout(() => {
+        createConfetti();
+      }, 500);
+
+      function createConfetti() {
+        const colors = ["#667eea", "#764ba2", "#10b981", "#f59e0b", "#ef4444"];
+        const confettiCount = 50;
+
+        for (let i = 0; i < confettiCount; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.left = Math.random() * 100 + "%";
+          confetti.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDelay = Math.random() * 3 + "s";
+          confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+          document.body.appendChild(confetti);
+
+          setTimeout(() => confetti.remove(), 5000);
+        }
+      }
+    </script>
+  </body>
 </html>

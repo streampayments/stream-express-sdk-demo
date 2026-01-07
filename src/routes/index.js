@@ -5,6 +5,7 @@ import paymentLinkRoutes from "./paymentLink.routes.js";
 import subscriptionRoutes from "./subscription.routes.js";
 import invoiceRoutes from "./invoice.routes.js";
 import couponRoutes from "./coupon.routes.js";
+import checkoutRoutes from "./checkout.routes.js";
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use("/payment-links", paymentLinkRoutes);
 router.use("/subscriptions", subscriptionRoutes);
 router.use("/invoices", invoiceRoutes);
 router.use("/coupons", couponRoutes);
+router.use("/checkout", checkoutRoutes);
 
 export default router;
