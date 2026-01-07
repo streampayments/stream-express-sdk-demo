@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -46,9 +46,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2>Enter Customer Details</h2>
-          <button class="modal-close" onclick="closeCheckoutModal()">
-            &times;
-          </button>
+          <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
         </div>
         <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
           <div class="form-group">
@@ -87,16 +85,10 @@
             <small>Enter your phone number without country code</small>
           </div>
           <div class="modal-actions">
-            <button
-              type="button"
-              class="btn-secondary"
-              onclick="closeCheckoutModal()"
-            >
+            <button type="button" class="btn-secondary" onclick="closeCheckoutModal()">
               Cancel
             </button>
-            <button type="submit" class="btn-primary">
-              Proceed to Checkout
-            </button>
+            <button type="submit" class="btn-primary">Proceed to Checkout</button>
           </div>
         </form>
       </div>
@@ -135,30 +127,18 @@
               return `
               <div class="product-card">
                 <div class="product-info">
-                  <h3 class="product-name">${escapeHtml(
-                    product.name || "Product"
-                  )}</h3>
-                  <p class="product-description">${escapeHtml(
-                    product.description || ""
-                  )}</p>
+                  <h3 class="product-name">${escapeHtml(product.name || "Product")}</h3>
+                  <p class="product-description">${escapeHtml(product.description || "")}</p>
                   <div class="product-meta">
-                    <span class="product-type">${formatProductType(
-                      productType,
-                      null,
-                      null
-                    )}</span>
+                    <span class="product-type">${formatProductType(productType, null, null)}</span>
                   </div>
                   <div class="product-footer">
                     <div class="product-price">
                       ${getCurrencySymbol(product.currency || "SAR")}
-                      <span class="amount">${formatPrice(
-                        product.amount || 0
-                      )}</span>
+                      <span class="amount">${formatPrice(product.price || 0)}</span>
                     </div>
                     <div class="product-actions">
-                      <button class="buy-button" onclick="checkoutProduct('${
-                        product.id
-                      }')">
+                      <button class="buy-button" onclick="checkoutProduct('${product.id}')">
                         Pay now
                       </button>
                     </div>
@@ -222,9 +202,7 @@
         // Build checkout URL with query parameters
         const checkoutUrl = `/api/checkout?products=${encodeURIComponent(
           selectedProductId
-        )}&name=${encodeURIComponent(
-          paymentLinkName
-        )}&customerName=${encodeURIComponent(
+        )}&name=${encodeURIComponent(paymentLinkName)}&customerName=${encodeURIComponent(
           customerName
         )}&customerPhone=${encodeURIComponent(fullPhoneNumber)}`;
 

@@ -139,6 +139,7 @@ body {
   margin-bottom: 15px;
   flex: 1;
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;

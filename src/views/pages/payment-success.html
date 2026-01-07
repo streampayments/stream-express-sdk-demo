@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -21,8 +21,7 @@
 
       <h1>Payment Successful!</h1>
       <p class="message">
-        Thank you for your purchase. Your payment has been processed
-        successfully.
+        Thank you for your purchase. Your payment has been processed successfully.
       </p>
 
       <div class="details" id="paymentDetails">
@@ -157,8 +156,7 @@
           const confetti = document.createElement("div");
           confetti.className = "confetti";
           confetti.style.left = Math.random() * 100 + "%";
-          confetti.style.backgroundColor =
-            colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
           confetti.style.animationDelay = Math.random() * 3 + "s";
           confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
           document.body.appendChild(confetti);
