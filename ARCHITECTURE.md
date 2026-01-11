@@ -2,12 +2,12 @@
 
 ## Overview
 
-This is a simplified Express.js boilerplate for Stream payments integration, focusing on product browsing and checkout functionality.
+This is a simplified Express.js demo for Stream payments integration, focusing on product browsing and checkout functionality.
 
 ## Project Structure
 
 ```
-stream-express-boilerplate/
+stream-express-sdk-demo/
 ├── public/                 # Static assets
 │   ├── styles/            # CSS files
 │   └── ...

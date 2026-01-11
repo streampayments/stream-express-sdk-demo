@@ -10,7 +10,7 @@ app.listen(PORT, () => {
   console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
 ║                                                               ║
-║   Stream Express Boilerplate                                  ║
+║   Stream Express SDK Demo                                     ║
 ║   Server running on http://localhost:${PORT}                     ║
 ║                                                               ║
 ║   📚 Documentation: https://docs.streampay.sa/getting-started ║
