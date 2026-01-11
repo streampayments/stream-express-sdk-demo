@@ -1,7 +1,7 @@
 {
-  "name": "stream-express-boilerplate",
+  "name": "stream-express-sdk-demo",
   "version": "1.0.0",
-  "description": "Express.js boilerplate for Stream Payment Integration",
+  "description": "Express.js demo for Stream Payment Integration",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
@@ -12,7 +12,7 @@
     "stream",
     "payment",
     "express",
-    "boilerplate",
+    "demo",
     "streampay"
   ],
   "author": "Stream Payments",

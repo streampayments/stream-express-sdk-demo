@@ -1,6 +1,6 @@
 # Tests
 
-This directory contains all tests for the Stream Express Boilerplate application.
+This directory contains all tests for the Stream Express SDK Demo application.
 
 ## Structure
 

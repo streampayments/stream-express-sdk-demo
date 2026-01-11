@@ -1,12 +1,15 @@
-# Stream Express Boilerplate
+# Stream Express SDK Demo
 
 <div align="center">
-  <img src="https://app.streampay.sa/media/logos/dark-logo.svg" alt="Stream Logo" width="200"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://app.streampay.sa/media/logos/light-logo.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://app.streampay.sa/media/logos/dark-logo.svg">
+    <img src="https://app.streampay.sa/media/logos/dark-logo.svg" alt="Stream Logo" width="200"/>
+  </picture>
 
-  **Quick-start Express.js boilerplate for Stream Payment Integration**
+  **Quick-start Express.js demo for Stream Payment Integration**
 
-  [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
-  [![Express](https://img.shields.io/badge/Express-4.18-blue.svg)](https://expressjs.com/)
+  [![npm express sdk](https://img.shields.io/npm/v/@streamsdk/express.svg)](https://www.npmjs.com/package/@streamsdk/express)
   [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 </div>
 
@@ -14,7 +17,7 @@
 
 ## 📖 Overview
 
-This is a ready-to-use Express.js boilerplate that demonstrates how to integrate Stream Payment SDK into your application. Perfect for getting started quickly or as a reference for your own implementation.
+This is a ready-to-use Express.js demo that demonstrates how to integrate Stream Payment SDK into your application. Perfect for getting started quickly or as a reference for your own implementation.
 
 **What's Included:**
 
@@ -45,7 +48,7 @@ This is a ready-to-use Express.js boilerplate that demonstrates how to integrate
 
 ```bash
 git clone <repository-url>
-cd stream-express-boilerplate
+cd stream-express-sdk-demo
 ```
 
 2. **Install dependencies**
@@ -90,7 +93,7 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 ## 📂 Project Structure
 
 ```
-stream-express-boilerplate/
+stream-express-sdk-demo/
 ├── src/
 │   ├── config/           # Configuration files
 │   │   └── stream.js     # Stream SDK initialization
@@ -365,7 +368,7 @@ logger.debug("Processing request", { userId: 123 });
 
 ## 🏗️ Architecture
 
-This boilerplate follows clean architecture principles:
+This demo follows clean architecture principles:
 
 - **Controllers**: Handle HTTP requests/responses
 - **Services**: Contain business logic
