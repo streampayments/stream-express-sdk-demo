@@ -17,7 +17,9 @@
       </p>
 
       <div class="nav-links">
-        <a href="/shop" class="nav-link">List products </a>
+        <a href="/shop" class="nav-link">Shop (Product Listing)</a>
+        <a href="/examples" class="nav-link">API Examples</a>
+        <a href="/health" class="nav-link">Health Check</a>
         <a
           href="https://docs.streampay.sa"
           target="_blank"
@@ -25,6 +27,22 @@
           class="nav-link"
           >View Documentation</a
         >
+      </div>
+
+      <div style="margin-top: 2rem; padding: 1.5rem; background: #f7fafc; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="margin-top: 0; color: #667eea;">Available Routes:</h3>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="padding: 0.5rem 0;"><strong>GET /</strong> - Home page (you are here)</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /shop</strong> - Product listing with checkout</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /examples</strong> - API examples and documentation</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /health</strong> - Server health check</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /api/products</strong> - List all products (JSON)</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /api/consumers</strong> - List all consumers (JSON)</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /api/payment-links</strong> - List payment links (JSON)</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /api/subscriptions</strong> - List subscriptions (JSON)</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /api/invoices</strong> - List invoices (JSON)</li>
+          <li style="padding: 0.5rem 0;"><strong>GET /api/coupons</strong> - List coupons (JSON)</li>
+        </ul>
       </div>
     </div>
   </body>

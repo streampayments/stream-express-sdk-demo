@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Examples - Stream Payments</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/home.css" />
+    <style>
+      .examples-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .example-card {
+        background: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .example-card h3 {
+        color: #667eea;
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+
+      .example-card h4 {
+        color: #4a5568;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .code-block {
+        background: #1a202c;
+        color: #e2e8f0;
+        padding: 1rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      .endpoint {
+        background: #f7fafc;
+        padding: 0.75rem;
+        border-left: 4px solid #667eea;
+        margin-bottom: 1rem;
+        font-family: 'Courier New', monospace;
+      }
+
+      .method {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        margin-right: 0.5rem;
+      }
+
+      .method.get {
+        background: #48bb78;
+        color: white;
+      }
+
+      .method.post {
+        background: #4299e1;
+        color: white;
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: #667eea;
+        text-decoration: none;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="examples-container">
+      <a href="/" class="back-link">← Back to Home</a>
+
+      <h1>Stream API Examples</h1>
+      <p>
+        Explore the available API endpoints and learn how to integrate Stream Payments into your
+        application.
+      </p>
+
+      <!-- Products -->
+      <div class="example-card">
+        <h3>Products</h3>
+        <p>Manage your products and pricing.</p>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/products</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/products?page=1&size=10</pre>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/products/:id</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/products/123</pre>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <code>/api/products/create</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl -X POST http://localhost:3000/api/products/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Premium Subscription",
+    "price": 199.99,
+    "currency": "SAR",
+    "type": "ONE_OFF",
+    "description": "Monthly premium plan"
+  }'</pre>
+      </div>
+
+      <!-- Consumers -->
+      <div class="example-card">
+        <h3>Consumers</h3>
+        <p>Manage customer information and profiles.</p>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/consumers</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/consumers?page=1&size=10</pre>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/consumers/:id</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/consumers/123</pre>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <code>/api/consumers/create</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl -X POST http://localhost:3000/api/consumers/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "customer@example.com",
+    "name": "Ahmad Ali",
+    "phone": "+966501234567"
+  }'</pre>
+      </div>
+
+      <!-- Payment Links -->
+      <div class="example-card">
+        <h3>Payment Links</h3>
+        <p>Create and manage payment links for easy checkout.</p>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/payment-links</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/payment-links?page=1&size=10</pre>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <code>/api/payment-links/create</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl -X POST http://localhost:3000/api/payment-links/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test Payment",
+    "amount": 99.99,
+    "consumer": {
+      "email": "customer@example.com",
+      "name": "Ahmad Ali",
+      "phone": "+966501234567"
+    },
+    "product": {
+      "name": "Premium Plan",
+      "price": 99.99
+    }
+  }'</pre>
+      </div>
+
+      <!-- Subscriptions -->
+      <div class="example-card">
+        <h3>Subscriptions</h3>
+        <p>Manage recurring payments and subscriptions.</p>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/subscriptions</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/subscriptions?page=1&size=10</pre>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <code>/api/subscriptions/create</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl -X POST http://localhost:3000/api/subscriptions/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "consumerId": "123",
+    "productId": "456",
+    "frequency": "MONTHLY"
+  }'</pre>
+      </div>
+
+      <!-- Invoices -->
+      <div class="example-card">
+        <h3>Invoices</h3>
+        <p>Create and manage invoices for your customers.</p>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/invoices</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/invoices?page=1&size=10</pre>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <code>/api/invoices/create</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl -X POST http://localhost:3000/api/invoices/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "consumerId": "123",
+    "items": [
+      {
+        "productId": "456",
+        "quantity": 1
+      }
+    ],
+    "dueDate": "2024-12-31"
+  }'</pre>
+      </div>
+
+      <!-- Coupons -->
+      <div class="example-card">
+        <h3>Coupons</h3>
+        <p>Create and manage discount coupons and promotional codes.</p>
+
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <code>/api/coupons</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl http://localhost:3000/api/coupons?page=1&size=10</pre>
+
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <code>/api/coupons/create</code>
+        </div>
+        <h4>Example cURL Request:</h4>
+        <pre class="code-block">curl -X POST http://localhost:3000/api/coupons/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "SAVE20",
+    "discount": 20,
+    "type": "PERCENTAGE",
+    "expiresAt": "2024-12-31"
+  }'</pre>
+      </div>
+
+      <div class="actions" style="margin-top: 2rem; text-align: center">
+        <a href="/shop" class="btn btn-primary">Try Shop Demo</a>
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+      </div>
+    </div>
+  </body>
+</html>

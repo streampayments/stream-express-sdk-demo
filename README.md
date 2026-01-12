@@ -66,8 +66,11 @@ Edit `.env` and add your Stream API key:
 
 ```env
 STREAM_API_KEY=your_actual_api_key_here
+STREAM_BASE_URL=https://app.streampay.sa/api/v2
 PORT=3000
 ```
+
+**For Development/Staging:** Use `https://dev.streampay.sa/api/v2`
 
 4. **Start the server**
 

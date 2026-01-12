@@ -12,11 +12,15 @@ export const initializeStreamSDK = () => {
       throw new Error("STREAM_API_KEY is not defined in environment variables");
     }
 
-    streamClient = StreamSDK.init(process.env.STREAM_API_KEY, {
-      baseUrl: process.env.APP_URL,
-    });
+    const config = {
+      baseUrl: process.env.STREAM_BASE_URL,
+    };
 
-    logger.info("Stream SDK initialized successfully");
+    streamClient = StreamSDK.init(process.env.STREAM_API_KEY, config);
+
+    logger.info("Stream SDK initialized successfully", {
+      baseUrl: process.env.STREAM_BASE_URL || "default",
+    });
     return streamClient;
   } catch (error) {
     logger.error("Failed to initialize Stream SDK", { error: error.message });
