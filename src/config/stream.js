@@ -4,6 +4,8 @@ import logger from "../utils/logger.js";
 
 dotenv.config();
 
+const DEFAULT_BASE_URL = "https://stream-app-service.streampay.sa";
+
 let streamClient = null;
 
 export const initializeStreamSDK = () => {
@@ -12,11 +14,13 @@ export const initializeStreamSDK = () => {
       throw new Error("STREAM_API_KEY is not defined in environment variables");
     }
 
+    const baseUrl = process.env.APP_URL || DEFAULT_BASE_URL;
+
     streamClient = StreamSDK.init(process.env.STREAM_API_KEY, {
-      baseUrl: process.env.APP_URL,
+      baseUrl,
     });
 
-    logger.info("Stream SDK initialized successfully");
+    logger.info("Stream SDK initialized successfully", { baseUrl });
     return streamClient;
   } catch (error) {
     logger.error("Failed to initialize Stream SDK", { error: error.message });

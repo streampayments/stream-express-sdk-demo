@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/", viewController.renderHome.bind(viewController));
 router.get("/examples", viewController.renderExamples.bind(viewController));
-router.get("/shop", viewController.renderShop.bind(viewController));
+router.get("/products", viewController.renderProducts.bind(viewController));
 router.get("/success", viewController.renderSuccess.bind(viewController));
 router.get("/cancel", viewController.renderCancel.bind(viewController));
 router.get("/payment-success", viewController.renderPaymentSuccess.bind(viewController));

@@ -26,8 +26,8 @@ export class ViewController {
     res.send(html);
   }
 
-  async renderShop(req, res) {
-    const html = readFileSync(join(__dirname, "../views/pages/shop.html"), "utf-8");
+  async renderProducts(req, res) {
+    const html = readFileSync(join(__dirname, "../views/pages/products.html"), "utf-8");
     res.send(html);
   }
 

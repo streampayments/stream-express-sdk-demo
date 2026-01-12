@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stream</title>
     <link rel="stylesheet" href="/styles/main.css" />
-    <link rel="stylesheet" href="/styles/shop.css" />
+    <link rel="stylesheet" href="/styles/products.css" />
   </head>
   <body>
     <div class="container">
@@ -60,17 +60,17 @@
             />
           </div>
           <div class="form-group">
-            <label for="customer-name">Customer Name *</label>
+            <label for="customer-name">Customer Name</label>
             <input
               type="text"
               id="customer-name"
               name="customerName"
               placeholder="e.g., Ahmed Ali"
-              required
             />
+            <small>Optional - Both name and phone required if filling customer details</small>
           </div>
           <div class="form-group">
-            <label for="customer-phone">Customer Phone *</label>
+            <label for="customer-phone">Customer Phone</label>
             <div class="phone-input-wrapper" id="phone-wrapper">
               <span class="phone-prefix">+966</span>
               <input
@@ -79,10 +79,9 @@
                 name="customerPhone"
                 placeholder="501234567"
                 pattern="^[0-9]{9,10}$"
-                required
               />
             </div>
-            <small>Enter your phone number without country code</small>
+            <small>Optional - Both name and phone required if filling customer details</small>
           </div>
           <div class="modal-actions">
             <button type="button" class="btn-secondary" onclick="closeCheckoutModal()">
@@ -196,15 +195,25 @@
         const customerName = formData.get("customerName");
         const customerPhone = formData.get("customerPhone");
 
-        // Prepend +966 to phone number
-        const fullPhoneNumber = "+966" + customerPhone;
+        // Validate that both name and phone are provided together or both are empty
+        if ((customerName && !customerPhone) || (!customerName && customerPhone)) {
+          alert("Please provide both customer name and phone number, or leave both empty.");
+          return;
+        }
 
         // Build checkout URL with query parameters
-        const checkoutUrl = `/api/checkout?products=${encodeURIComponent(
-          selectedProductId
-        )}&name=${encodeURIComponent(paymentLinkName)}&customerName=${encodeURIComponent(
-          customerName
-        )}&customerPhone=${encodeURIComponent(fullPhoneNumber)}`;
+        let checkoutUrl = `/api/checkout?products=${encodeURIComponent(selectedProductId)}`;
+
+        if (paymentLinkName) {
+          checkoutUrl += `&name=${encodeURIComponent(paymentLinkName)}`;
+        }
+
+        if (customerName && customerPhone) {
+          checkoutUrl += `&customerName=${encodeURIComponent(customerName)}`;
+          // Prepend +966 to phone number
+          const fullPhoneNumber = "+966" + customerPhone;
+          checkoutUrl += `&customerPhone=${encodeURIComponent(fullPhoneNumber)}`;
+        }
 
         // Redirect to checkout
         window.location.href = checkoutUrl;
