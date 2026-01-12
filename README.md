@@ -40,7 +40,7 @@ This is a ready-to-use Express.js demo that demonstrates how to integrate Stream
 ### Prerequisites
 
 - Node.js 18+ installed
-- Stream API Key ([Get one here](https://app.streampay.sa))
+- Stream API Key ([Get one here](https://app.streampay.sa/settings/api-keys))
 
 ### Installation
 
@@ -104,6 +104,7 @@ stream-express-sdk-demo/
 │   │   ├── subscription.controller.js
 │   │   ├── invoice.controller.js
 │   │   ├── coupon.controller.js
+│   │   ├── checkout.controller.js
 │   │   └── view.controller.js
 │   ├── services/         # Business logic layer
 │   │   ├── product.service.js
@@ -117,11 +118,22 @@ stream-express-sdk-demo/
 │   │   └── requestLogger.js
 │   ├── routes/           # Route definitions
 │   │   ├── index.js
-│   │   └── [domain].routes.js
+│   │   ├── product.routes.js
+│   │   ├── consumer.routes.js
+│   │   ├── paymentLink.routes.js
+│   │   ├── subscription.routes.js
+│   │   ├── invoice.routes.js
+│   │   ├── coupon.routes.js
+│   │   ├── checkout.routes.js
+│   │   └── view.routes.js
 │   ├── utils/            # Utility functions
 │   │   └── logger.js     # Professional logger
 │   ├── views/            # HTML templates
 │   │   └── pages/
+│   │       ├── home.html
+│   │       ├── products.html
+│   │       ├── payment-success.html
+│   │       └── payment-failed.html
 │   ├── app.js            # Express app setup
 │   └── server.js         # Server entry point
 ├── public/               # Static files
@@ -169,60 +181,38 @@ Visit `http://localhost:3000` for an interactive dashboard with links to all exa
 - `GET /api/coupons` - List all coupons
 - `POST /api/coupons/create` - Create a coupon
 
+#### Checkout
+- `GET /api/checkout` - Create payment link and redirect to Stream checkout page
+  - Query parameters: `products`, `name`, `customerName`, `customerPhone`
+
+### Page Routes
+
+- `GET /` - Home page
+- `GET /products` - Product listing page with checkout functionality
+- `GET /payment/success` - Payment success page
+- `GET /payment/cancelled` - Payment failed/cancelled page
+
 ---
 
 ## 💡 Usage Examples
 
-### Creating a Payment Link
+### Using the Product Checkout Flow
 
-**Using cURL:**
+1. **Visit the products page:**
+   ```
+   http://localhost:3000/products
+   ```
 
-```bash
-curl -X POST http://localhost:3000/api/payment-links/create \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Test Payment",
-    "amount": 99.99,
-    "consumer": {
-      "email": "customer@example.com",
-      "name": "Ahmad Ali",
-      "phone": "+966501234567"
-    },
-    "product": {
-      "name": "Premium Plan",
-      "price": 99.99
-    }
-  }'
-```
+2. **Click "Pay now" on any product** - This opens a checkout modal
 
-**Using JavaScript (Fetch API):**
+3. **Fill in the optional customer details:**
+   - Payment Link Name (required)
+   - Customer Name (optional - but must provide both name and phone if filling)
+   - Customer Phone (optional - but must provide both name and phone if filling)
 
-```javascript
-const response = await fetch('http://localhost:3000/api/payment-links/create', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name: 'Test Payment',
-    amount: 99.99,
-    consumer: {
-      email: 'customer@example.com',
-      name: 'Ahmad Ali',
-      phone: '+966501234567'
-    },
-    product: {
-      name: 'Premium Plan',
-      price: 99.99
-    }
-  })
-});
+4. **Submit** - You'll be redirected to Stream's payment page
 
-const data = await response.json();
-console.log('Payment URL:', data.paymentUrl);
-```
-
-### Creating a Product
+### Creating a Product via API
 
 ```bash
 curl -X POST http://localhost:3000/api/products/create \
@@ -236,10 +226,18 @@ curl -X POST http://localhost:3000/api/products/create \
   }'
 ```
 
-### Listing Consumers
+### Listing Products
 
 ```bash
-curl http://localhost:3000/api/consumers?page=1&size=10
+curl http://localhost:3000/api/products?page=1&size=10
+```
+
+### Direct Checkout Link
+
+You can also create a checkout link directly via URL:
+
+```
+http://localhost:3000/api/checkout?products=prod_123&name=Zoo%20Trip&customerName=Ahmad%20Ali&customerPhone=%2B966501234567
 ```
 
 ---
