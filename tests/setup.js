@@ -35,9 +35,10 @@ global.testHelpers = {
     id: "test-product-id",
     name: "Test Product",
     description: "Test product description",
-    amount: 100,
-    currency: "SAR",
+    price: 100,
     type: "ONE_OFF",
+    is_one_time: true,
+    recurring_interval_count: 1,
   }),
 
   /**

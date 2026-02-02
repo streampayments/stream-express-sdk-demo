@@ -34,10 +34,16 @@ export class ProductService {
       const productData = {
         name: data.name || "Sample Product",
         price: parseFloat(data.price) || 99.99,
-        currency: data.currency || "SAR",
         type: data.type || "ONE_OFF",
+        is_one_time: data.is_one_time !== undefined ? data.is_one_time : (data.type === "ONE_OFF" || !data.type),
+        recurring_interval_count: data.recurring_interval_count || 1,
         description: data.description || "A sample product",
       };
+
+      // Add recurring_interval for recurring products
+      if (data.type === "RECURRING" && data.recurring_interval) {
+        productData.recurring_interval = data.recurring_interval;
+      }
 
       logger.debug("Creating product", { productData });
       const product = await client.createProduct(productData);

@@ -220,11 +220,12 @@ curl -X POST http://localhost:3000/api/products/create \
   -d '{
     "name": "Premium Subscription",
     "price": 199.99,
-    "currency": "SAR",
     "type": "ONE_OFF",
     "description": "Monthly premium plan"
   }'
 ```
+
+**Note:** Currency is now set at the organization level, not per product.
 
 ### Listing Products
 
