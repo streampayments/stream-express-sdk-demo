@@ -90,6 +90,15 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 
 ---
 
+## SDK version & migration
+
+This demo uses `@streamsdk/typescript@^1.1.3` and `@streamsdk/express@^1.0.5` with request mappers in `src/utils/streamMappers.js`.
+
+- Legacy fields like `code`, `discount_type`, and `price` are converted to current API shapes
+- Full guide: [SDK MIGRATION.md](https://github.com/streampayments/streamsdk-typescript/blob/main/MIGRATION.md)
+
+---
+
 ## 📂 Project Structure
 
 ```

@@ -1,4 +1,5 @@
 import { getStreamClient } from "../config/stream.js";
+import { mapCouponCreateInput } from "../utils/streamMappers.js";
 import logger from "../utils/logger.js";
 
 export class CouponService {
@@ -18,23 +19,7 @@ export class CouponService {
   async createCoupon(data) {
     try {
       const client = getStreamClient();
-      const couponData = {
-        code: data.code,
-        discount_type: data.discount_type || "PERCENTAGE",
-        discount_value: parseFloat(data.discount_value),
-      };
-
-      if (data.max_uses) {
-        couponData.max_uses = parseInt(data.max_uses);
-      }
-
-      if (data.expires_at) {
-        couponData.expires_at = data.expires_at;
-      }
-
-      if (data.metadata) {
-        couponData.metadata = data.metadata;
-      }
+      const couponData = mapCouponCreateInput(data);
 
       logger.debug("Creating coupon", { couponData });
       const coupon = await client.createCoupon(couponData);

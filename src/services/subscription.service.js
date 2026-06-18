@@ -1,4 +1,5 @@
 import { getStreamClient } from "../config/stream.js";
+import { mapSubscriptionCreateInput } from "../utils/streamMappers.js";
 import logger from "../utils/logger.js";
 
 export class SubscriptionService {
@@ -18,19 +19,7 @@ export class SubscriptionService {
   async createSubscription(data) {
     try {
       const client = getStreamClient();
-      const subscriptionData = {
-        product_id: data.product_id,
-        organization_consumer_id: data.organization_consumer_id || data.consumer_id,
-        start_date: data.start_date,
-      };
-
-      if (data.end_date) {
-        subscriptionData.end_date = data.end_date;
-      }
-
-      if (data.metadata) {
-        subscriptionData.metadata = data.metadata;
-      }
+      const subscriptionData = mapSubscriptionCreateInput(data);
 
       logger.debug("Creating subscription", { subscriptionData });
       const subscription = await client.createSubscription(subscriptionData);

@@ -1,4 +1,5 @@
 import { getStreamClient } from "../config/stream.js";
+import { mapPaymentLinkCreateInput } from "../utils/streamMappers.js";
 import logger from "../utils/logger.js";
 
 export class PaymentLinkService {
@@ -18,20 +19,7 @@ export class PaymentLinkService {
   async createPaymentLink(data) {
     try {
       const client = getStreamClient();
-      const paymentLinkData = {
-        name: data.name || "Payment Link",
-        items: data.items || [],
-        success_redirect_url: data.success_redirect_url || process.env.SUCCESS_REDIRECT_URL,
-        failure_redirect_url: data.failure_redirect_url || process.env.RETURN_URL,
-      };
-
-      if (data.organization_consumer_id) {
-        paymentLinkData.organization_consumer_id = data.organization_consumer_id;
-      }
-
-      if (data.metadata) {
-        paymentLinkData.metadata = data.metadata;
-      }
+      const paymentLinkData = mapPaymentLinkCreateInput(data);
 
       logger.debug("Creating payment link", { paymentLinkData });
       const paymentLink = await client.createPaymentLink(paymentLinkData);

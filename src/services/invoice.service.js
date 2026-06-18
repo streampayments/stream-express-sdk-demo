@@ -1,4 +1,5 @@
 import { getStreamClient } from "../config/stream.js";
+import { mapInvoiceCreateInput } from "../utils/streamMappers.js";
 import logger from "../utils/logger.js";
 
 export class InvoiceService {
@@ -18,19 +19,7 @@ export class InvoiceService {
   async createInvoice(data) {
     try {
       const client = getStreamClient();
-      const invoiceData = {
-        organization_consumer_id: data.organization_consumer_id || data.consumer_id,
-        items: data.items || [],
-        due_date: data.due_date,
-      };
-
-      if (data.description) {
-        invoiceData.description = data.description;
-      }
-
-      if (data.metadata) {
-        invoiceData.metadata = data.metadata;
-      }
+      const invoiceData = mapInvoiceCreateInput(data);
 
       logger.debug("Creating invoice", { invoiceData });
       const invoice = await client.createInvoice(invoiceData);
